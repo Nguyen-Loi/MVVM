@@ -4,13 +4,53 @@ A new Flutter project.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+How to setup 
 
-A few resources to get you started if this is your first Flutter project:
+### Pasre json database 
+1. Visit: https://app.mocklab.io/
+{
+  "email": "123",
+  "password": "123",
+  "lmel": "123",
+  "device_type": "Samsung Note 9"
+}
+Reponse 
+{
+  "status": 0,
+  "message": "success",
+  
+  "customer": {
+    "id": "123456789",
+    "name": "Mina Farid",
+    "numOfNotification": 12
+  },
+  "contacts":{
+    "phone": "123456789",
+    "link": "https://www.facebook.com/hongloi12123",
+    "email": "hongloi123123@gmail.com"
+  }
+}
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+2. setup:
+  analyzer: ^3.4.1
+  build_runner: ^2.1.8
+  cupertino_icons: ^1.0.2
+  dio: ^4.0.5
+  flutter_svg: ^1.0.3
+  json_serializable: ^6.1.5
+  retrofit: ^3.0.1+1
+  retrofit_generator: ^4.0.1
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+3. Create data/reponses.dart
+
+after create contructor 
+flutter pub get
+flutter pub run build_runner build
+if program request create responses.g.dart then create reponses.g.dart and run again
+
+4. Create fromJson and toJson with every class 
+
+
+
+
+
