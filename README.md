@@ -1,19 +1,6 @@
-1. Create data/network/app_api.dart
+Dartz: Using Either
+The dartz package includes classes for programming in a functional style.
 
-and path
-import 'package:advance_flutter/app/constant.dart';
-import 'package:advance_flutter/data/responses/responses.dart';
-import 'package:dio/dio.dart';
-import 'package:retrofit/http.dart';
-part 'app_api.g.dart';
+Either allows you to represent a choice between two different types and is mostly used in error handling.
 
-@RestApi(baseUrl: Constant.baseUrl)
-abstract class AppServiceClient {
-  factory AppServiceClient(Dio dio, {String baseUrl}) = _AppServiceClient;
-
-  @POST('/customers/login')
-  Future<AuthenticationResponse> login();
-}
-
-2. Create default app_api.g.dart and must have part 'app_api.g.dart' in app_api.dart;
- flutter pub run build_runner build --delete-conflicting-outputs
+Link: https://halesworth.org/dartz-using-either/
