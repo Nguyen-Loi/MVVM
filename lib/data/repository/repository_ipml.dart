@@ -5,8 +5,8 @@ import 'package:dartz/dartz.dart';
 import 'package:advance_flutter/data/data_source/remote_data_source.dart';
 import 'package:advance_flutter/data/network/Failure.dart';
 import 'package:advance_flutter/data/request/request.dart';
-import 'package:advance_flutter/domain/model.dart';
-import 'package:advance_flutter/domain/repository.dart';
+import 'package:advance_flutter/domain/model/model.dart';
+import 'package:advance_flutter/domain/repository/repository.dart';
 import 'package:advance_flutter/data/mapper/mapper.dart';
 
 class RepositoryIpml extends Repository {
