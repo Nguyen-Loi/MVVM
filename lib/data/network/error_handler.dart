@@ -1,4 +1,6 @@
+
 import 'package:advance_flutter/data/network/Failure.dart';
+import 'package:dio/dio.dart';
 
 enum DataSource {
   SUCCESS,
@@ -13,29 +15,52 @@ enum DataSource {
   RECEIVE_TIMEOUT,
   SEND_TIMEOUT,
   CACHE_ERROR,
-  NO_INTERNET_CONNECTION
+  NO_INTERNET_CONNECTION,
+  DEFAULT
 }
 
-class ResponseCode {
-  // API status codes
-  static const int SUCCESS = 200; // success with data
-  static const int NO_CONTENT = 201; // success with no content
-  static const int BAD_REQUEST = 400; // failure, api rejected the request
-  static const int FORBIDDEN = 403; // failure, api rejected the request
-  static const int UNAUTHORISED = 401; // failure user is not authorised
-  static const int NOT_FOUND =
-      404; // failure, api url is not correct and not found
-  static const int INTERNAL_SERVER_ERROR =
-      500; // failure, crash happened in server side
+class ErrorHandler implements Exception {
+  late Failure failure;
 
-  // local status code
-  static const int UNKNOWN = -1;
-  static const int CONNECT_TIMEOUT = -2;
-  static const int CANCEL = -3;
-  static const int RECEIVE_TIMEOUT = -4;
-  static const int SEND_TIMEOUT = -5;
-  static const int CACHE_ERROR = -6;
-  static const int NO_INTERNET_CONNECTION = -7;
+  ErrorHandler.handle(dynamic error) {
+    if (error is DioError) {
+      // dio error so its error from response of the API
+      failure = _handleError(error);
+    } else {
+      // default error
+      failure = DataSource.DEFAULT.getFailure();
+    }
+  }
+
+  Failure _handleError(DioError error) {
+    switch (error.type) {
+      case DioErrorType.connectTimeout:
+        return DataSource.CONNECT_TIMEOUT.getFailure();
+      case DioErrorType.sendTimeout:
+        return DataSource.SEND_TIMEOUT.getFailure();
+      case DioErrorType.receiveTimeout:
+        return DataSource.RECEIVE_TIMEOUT.getFailure();
+      case DioErrorType.response:
+        switch (error.response?.statusCode) {
+          case ResponseCode.BAD_REQUEST:
+            return DataSource.BAD_REQUEST.getFailure();
+          case ResponseCode.FORBIDDEN:
+            return DataSource.FORBIDDEN.getFailure();
+          case ResponseCode.UNAUTHORISED:
+            return DataSource.UNAUTHORISED.getFailure();
+          case ResponseCode.NOT_FOUND:
+            return DataSource.NOT_FOUND.getFailure();
+          case ResponseCode.INTERNAL_SERVER_ERROR:
+            return DataSource.INTERNAL_SERVER_ERROR.getFailure();
+          default:
+            return DataSource.DEFAULT.getFailure();
+        }
+      case DioErrorType.cancel:
+        return DataSource.CANCEL.getFailure();
+      case DioErrorType.other:
+        return DataSource.DEFAULT.getFailure();
+    }
+  }
 }
 
 extension DataSourceExtension on DataSource {
@@ -67,12 +92,35 @@ extension DataSourceExtension on DataSource {
       case DataSource.NO_INTERNET_CONNECTION:
         return Failure(ResponseCode.NO_INTERNET_CONNECTION,
             ResponseMessage.NO_INTERNET_CONNECTION);
+      case DataSource.DEFAULT:
+        return Failure(ResponseCode.DEFAULT, ResponseMessage.DEFAULT);
       default:
-        return Failure(ResponseCode.UNKNOWN, ResponseMessage.UNKNOWN);
+        return Failure(ResponseCode.DEFAULT, ResponseMessage.DEFAULT);
     }
   }
 }
 
+class ResponseCode {
+  // API status codes
+  static const int SUCCESS = 200; // success with data
+  static const int NO_CONTENT = 201; // success with no content
+  static const int BAD_REQUEST = 400; // failure, api rejected the request
+  static const int FORBIDDEN = 403; // failure, api rejected the request
+  static const int UNAUTHORISED = 401; // failure user is not authorised
+  static const int NOT_FOUND =
+      404; // failure, api url is not correct and not found
+  static const int INTERNAL_SERVER_ERROR =
+      500; // failure, crash happened in server side
+
+  // local status code
+  static const int DEFAULT = -1;
+  static const int CONNECT_TIMEOUT = -2;
+  static const int CANCEL = -3;
+  static const int RECEIVE_TIMEOUT = -4;
+  static const int SEND_TIMEOUT = -5;
+  static const int CACHE_ERROR = -6;
+  static const int NO_INTERNET_CONNECTION = -7;
+}
 
 class ResponseMessage {
   // API status codes
@@ -91,7 +139,7 @@ class ResponseMessage {
       "some thing went wrong, try again later"; // failure, crash happened in server side
 
   // local status code
-  static const String UNKNOWN = "some thing went wrong, try again later";
+  static const String DEFAULT = "some thing went wrong, try again later";
   static const String CONNECT_TIMEOUT = "time out error, try again later";
   static const String CANCEL = "request was cancelled, try again later";
   static const String RECEIVE_TIMEOUT = "time out error, try again later";
