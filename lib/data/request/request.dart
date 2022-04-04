@@ -3,12 +3,6 @@ class LoginRequest {
   String password;
   String imei;
   String deviceType;
-  LoginRequest(
-    this.email,
-    this.password,
-    this.imei,
-    this.deviceType,
-  );
 
-  
+  LoginRequest(this.email, this.password, this.imei, this.deviceType);
 }

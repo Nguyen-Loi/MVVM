@@ -1,4 +1,4 @@
-import 'package:advance_flutter/data/network/Failure.dart';
+import 'package:advance_flutter/data/network/failure.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class BaseUseCase<In, Out> {

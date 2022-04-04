@@ -1,5 +1,4 @@
-
-import 'package:advance_flutter/data/network/Failure.dart';
+import 'package:advance_flutter/data/network/failure.dart';
 import 'package:dio/dio.dart';
 
 enum DataSource {
@@ -147,4 +146,9 @@ class ResponseMessage {
   static const String CACHE_ERROR = "Cache error, try again later";
   static const String NO_INTERNET_CONNECTION =
       "Please check your internet connection";
+}
+
+class ApiInternalStatus{
+  static const int  SUCCESS =0;
+  static const int  FAILURE =1;
 }
