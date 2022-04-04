@@ -1,3 +1,4 @@
+import 'package:advance_flutter/data/network/error_handler.dart';
 import 'package:advance_flutter/data/network/network_info.dart';
 import 'package:dartz/dartz.dart';
 
@@ -18,18 +19,28 @@ class RepositoryIpml extends Repository {
       LoginRequest loginRequest) async {
     if (await _networkInfo.isConnected) {
       // its safe to call the api
-      final response = await _remoteDataSource.login(loginRequest);
+      try {
+        final response = await _remoteDataSource.login(loginRequest);
 
-      if (response.status == 0) {
-        //success -> right
-        return Right(response.toDomain());
-      } else {
-        // return biz logic error -> Left
-        return Left(Failure(
-            409, response.message ?? 'We have biz error login from api side'));
+        if (response.status == ApiInternalStatus.SUCCESS) {
+          //success -> right
+          return Right(response.toDomain());
+        } else {
+          // return biz logic error -> Left
+          return Left(Failure(response.status ?? ApiInternalStatus.FAILURE,
+              response.message ?? ResponseMessage.DEFAULT));
+        }
+      } catch (error) {
+        return (Left(ErrorHandler.handle(error).failure));
       }
     }
     // It's return connection error
-    return Left(Failure(409, 'Please check your internet connection'));
+     return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
   }
+}
+
+
+class ApiInternalStatus{
+  static const int  SUCCESS =0;
+  static const int  FAILURE =1;
 }
