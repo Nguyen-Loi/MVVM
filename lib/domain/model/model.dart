@@ -34,10 +34,10 @@ class Contacts {
   );
 }
 
-class Authenication {
+class Authentication {
   Customer? customer;
   Contacts? contacts;
-  Authenication(
+  Authentication(
     this.customer, this.contacts);
  
   

@@ -22,7 +22,7 @@ extension ContactsReponseMapper on ContactsResponse? {
 }
 
 extension AuthenicationReponseMapper on AuthenticationResponse? {
-  Authenication toDomain() {
-    return Authenication(this?.customer?.toDomain(), this?.contacts?.toDomain());
+  Authentication toDomain() {
+    return Authentication(this?.customer?.toDomain(), this?.contacts?.toDomain());
   }
 }

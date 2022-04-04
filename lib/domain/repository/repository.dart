@@ -6,5 +6,5 @@ import 'package:dartz/dartz.dart';
 import '../../data/network/Failure.dart';
 
 abstract class Repository {
-  Future<Either<Failure,Authenication>> login(LoginRequest loginRequest);
+  Future<Either<Failure,Authentication>> login(LoginRequest loginRequest);
 }

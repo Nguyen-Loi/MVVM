@@ -15,7 +15,7 @@ class RepositoryIpml extends Repository {
   RepositoryIpml(this._remoteDataSource, this._networkInfo);
 
   @override
-  Future<Either<Failure, Authenication>> login(
+  Future<Either<Failure, Authentication>> login(
       LoginRequest loginRequest) async {
     if (await _networkInfo.isConnected) {
       // its safe to call the api
