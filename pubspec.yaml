@@ -37,6 +37,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_svg: ^1.0.3
+  freezed: ^1.1.1
   json_serializable: ^6.1.5
   pretty_dio_logger: ^1.1.1
   retrofit: ^3.0.1+1
