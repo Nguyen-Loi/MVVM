@@ -5,3 +5,5 @@ part 'freezed_data_classes.freezed.dart';
 class LoginObject with _$LoginObject{
 factory LoginObject(String userName,String password) = _LoginObject;
 }
+
+run  flutter pub run build_runner build --delete-conflicting-outputs
