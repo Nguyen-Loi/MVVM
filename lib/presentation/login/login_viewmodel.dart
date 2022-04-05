@@ -1,11 +1,18 @@
+import 'dart:async';
+
 import 'package:advance_flutter/presentation/base/base_view_model.dart';
 
 class LoginViewModel extends BaseViewModel
     with LoginViewModelInputs, LoginViewModelOutputs {
+  StreamController _userNamestreamController =
+      StreamController<String>.broadcast();
+  StreamController _passwordstreamController =
+      StreamController<String>.broadcast();
   // inputs
   @override
   void dispose() {
-    // TODO: implement dispose
+    _userNamestreamController.close();
+    _passwordstreamController.close();
   }
 
   @override
@@ -15,11 +22,11 @@ class LoginViewModel extends BaseViewModel
 
   @override
   // TODO: implement inputPassword
-  Sink get inputPassword => throw UnimplementedError();
+  Sink get inputPassword => _passwordstreamController.sink;
 
   @override
   // TODO: implement inputUserName
-  Sink get inputUserName => throw UnimplementedError();
+  Sink get inputUserName => _userNamestreamController.sink;
 
   @override
   login() {
@@ -42,11 +49,22 @@ class LoginViewModel extends BaseViewModel
   // outputs
   @override
   // TODO: implement outputIsPasswordValid
-  Stream<bool> get outputIsPasswordValid => throw UnimplementedError();
+  Stream<bool> get outputIsPasswordValid => _passwordstreamController.stream
+      .map((password) => _isPasswordValid(password));
 
   @override
   // TODO: implement outputIsUserNameValid
-  Stream<bool> get outputIsUserNameValid => throw UnimplementedError();
+  Stream<bool> get outputIsUserNameValid => _userNamestreamController.stream
+      .map((userName) => _isUsernameValid(userName));
+
+  //private function
+  bool _isPasswordValid(String password) {
+    return password.isNotEmpty;
+  }
+
+  bool _isUsernameValid(String userName) {
+    return userName.isNotEmpty;
+  }
 }
 
 abstract class LoginViewModelInputs {
