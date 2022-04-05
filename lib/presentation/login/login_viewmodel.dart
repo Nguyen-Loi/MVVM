@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:advance_flutter/domain/usecase/login_usecase.dart';
 import 'package:advance_flutter/presentation/base/base_view_model.dart';
 import 'package:advance_flutter/presentation/common/freezed_data_classes.dart';
 
@@ -11,6 +12,9 @@ class LoginViewModel extends BaseViewModel
       StreamController<String>.broadcast();
 
   var loginObject = LoginObject("", "");
+
+  LoginUseCase _loginUseCase;
+  LoginViewModel(this._loginUseCase);
   // inputs
   @override
   void dispose() {
@@ -32,23 +36,30 @@ class LoginViewModel extends BaseViewModel
   Sink get inputUserName => _userNamestreamController.sink;
 
   @override
-  login() {
-    // TODO: implement login
-    throw UnimplementedError();
+  login() async {
+    (await _loginUseCase
+    .execute(LoginUseCaseInput(loginObject.userName, loginObject.password))).fold((failure) => {
+      //Left -> Failure
+      print(failure.message)
+    }, (data) => {
+      //right -> sucess (data)
+      print(data.customer?.name)
+    });
   }
 
   @override
   setPassword(String password) {
     inputPassword.add(password);
-    loginObject = loginObject.copyWith(password: password); //data class operation same as kolin
-
+    loginObject = loginObject.copyWith(
+        password: password); //data class operation same as kolin
   }
 
   @override
   setUserName(String userName) {
     inputUserName.add(userName);
     inputPassword.add(userName);
-    loginObject = loginObject.copyWith(userName: userName); //data class operation same as kolin
+    loginObject = loginObject.copyWith(
+        userName: userName); //data class operation same as kolin
   }
 
   // outputs
