@@ -158,7 +158,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
 }
 
 class OnBoardingPage extends StatelessWidget {
-  SliderObject? _sliderObject;
+  SliderObject _sliderObject;
 
   OnBoardingPage(
     this._sliderObject,
@@ -175,7 +175,7 @@ class OnBoardingPage extends StatelessWidget {
         Padding(
           padding: EdgeInsets.all(AppPadding.p8),
           child: Text(
-            _sliderObject!.title!,
+            _sliderObject.title,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headline1,
           ),
@@ -183,7 +183,7 @@ class OnBoardingPage extends StatelessWidget {
         Padding(
           padding: EdgeInsets.all(AppPadding.p8),
           child: Text(
-            _sliderObject!.subTitle!,
+            _sliderObject.subTitle,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.subtitle1,
           ),
@@ -191,7 +191,7 @@ class OnBoardingPage extends StatelessWidget {
         SizedBox(
           height: AppSize.s60,
         ),
-        SvgPicture.asset(_sliderObject!.image!)
+        SvgPicture.asset(_sliderObject.image)
       ],
     );
   }

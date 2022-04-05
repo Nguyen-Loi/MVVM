@@ -44,7 +44,11 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return _getContentWidget();
+  }
+
+  Widget _getContentWidget() {
+   return Scaffold(
         body: Container(
       padding: EdgeInsets.only(top: AppPadding.p100),
       color: ColorManager.white,
@@ -53,7 +57,8 @@ class _LoginViewState extends State<LoginView> {
               key: _formKey,
               child: Column(
                 children: [
-                  SvgPicture.asset(ImageAssets.loginIc),
+                 Image(image: AssetImage(ImageAssets.splashLogo)), 
+                  SizedBox(height: AppSize.s28,),
                   Padding(
                       padding: EdgeInsets.only(
                           left: AppPadding.p28, right: AppPadding.p28),
@@ -102,9 +107,10 @@ class _LoginViewState extends State<LoginView> {
                       builder: (context, snapshot) {
                         return ElevatedButton(
                             onPressed: (snapshot.data ?? false)
-                                ?() {
+                                ? () {
                                     _viewModel.login();
-                                  } :null,
+                                  }
+                                : null,
                             child: Text(AppStrings.login));
                       },
                     ),
