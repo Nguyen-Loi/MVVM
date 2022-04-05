@@ -1,6 +1,7 @@
 import 'package:advance_flutter/presentation/login/login_viewmodel.dart';
 import 'package:advance_flutter/presentation/resources/assets_manager.dart';
 import 'package:advance_flutter/presentation/resources/color_manager.dart';
+import 'package:advance_flutter/presentation/resources/strings_manager.dart';
 import 'package:advance_flutter/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -63,6 +64,29 @@ class _LoginViewState extends State<LoginView> {
                           return TextFormField(
                             keyboardType: TextInputType.emailAddress,
                             controller: _userNameController,
+                            decoration: InputDecoration(
+                              hintText: AppStrings.username,
+                              labelText: AppStrings.username,
+                              errorText: (snapshot.data??true)?null:AppStrings.usernameError
+                            ),
+                          );
+                        },
+                      )),
+                           SizedBox(height: AppSize.s20),
+                      Padding(
+                      padding: EdgeInsets.only(
+                          left: AppPadding.p28, right: AppPadding.p28),
+                      child: StreamBuilder<bool>(
+                        stream: _viewModel.outputIsPasswordValid,
+                        builder: (context, snapshot) {
+                          return TextFormField(
+                            keyboardType: TextInputType.visiblePassword,
+                            controller: _passwordController,
+                            decoration: InputDecoration(
+                              hintText: AppStrings.password,
+                              labelText: AppStrings.password,
+                              errorText: (snapshot.data??true)?null:AppStrings.passwordError
+                            ),
                           );
                         },
                       ))
