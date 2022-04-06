@@ -1,9 +1,9 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-part 'freezed_data_classes.freezed.dart';
+https://stackoverflow.com/questions/63704324/flutter-insecure-socket-connections-are-disallowed-by-platform-10-0-2-2
 
-@freezed
-class LoginObject with _$LoginObject{
-factory LoginObject(String userName,String password) = _LoginObject;
-}
+<key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
 
-run  flutter pub run build_runner build --delete-conflicting-outputs
+    
