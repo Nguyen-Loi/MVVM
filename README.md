@@ -1,8 +1,5 @@
-https://stackoverflow.com/questions/63704324/flutter-insecure-socket-connections-are-disallowed-by-platform-10-0-2-2
+animetion with lottie
 
-<key>NSAppTransportSecurity</key>
-    <dict>
-        <key>NSAllowsArbitraryLoads</key>
-        <true/>
-    </dict>
-    
+https://lottiefiles.com/featured
+
+you can dowload file json to using it
