@@ -1,3 +1,4 @@
+import 'package:advance_flutter/app/di.dart';
 import 'package:advance_flutter/presentation/forgot_password/forgot_password.dart';
 import 'package:advance_flutter/presentation/login/login.dart';
 import 'package:advance_flutter/presentation/main/main_view.dart';
@@ -24,6 +25,7 @@ class RouteGenerator {
       case Routes.splashRoute:
         return MaterialPageRoute(builder: (_) => SplashView());
       case Routes.loginRoute:
+        initLoginModule();
         return MaterialPageRoute(builder: (_) => LoginView());
       case Routes.onBoardingRoute:
         return MaterialPageRoute(builder: (_) => OnBoardingView());
@@ -39,7 +41,8 @@ class RouteGenerator {
         return unDefinedRoute();
     }
   }
-   static Route<dynamic> unDefinedRoute() {
+
+  static Route<dynamic> unDefinedRoute() {
     return MaterialPageRoute(
         builder: (_) => Scaffold(
               appBar: AppBar(
