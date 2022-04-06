@@ -5,5 +5,4 @@ https://stackoverflow.com/questions/63704324/flutter-insecure-socket-connections
         <key>NSAllowsArbitraryLoads</key>
         <true/>
     </dict>
-
     
