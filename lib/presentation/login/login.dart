@@ -1,4 +1,5 @@
 import 'package:advance_flutter/app/di.dart';
+import 'package:advance_flutter/presentation/common/state_renderer/state_render_ipml.dart';
 import 'package:advance_flutter/presentation/login/login_viewmodel.dart';
 import 'package:advance_flutter/presentation/resources/assets_manager.dart';
 import 'package:advance_flutter/presentation/resources/color_manager.dart';
@@ -37,12 +38,23 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    return _getContentWidget();
+    return Scaffold(
+      backgroundColor: ColorManager.white,
+      body: StreamBuilder<FlowState>(
+        stream: _viewModel.outputState,
+        builder: (context, snapshot) {
+          return snapshot.data?.getScreenWidget(context, _getContentWidget(),
+                  () {
+                _viewModel.login();
+              }) ??
+              _getContentWidget();
+        },
+      ),
+    );
   }
 
   Widget _getContentWidget() {
     return Scaffold(
-      backgroundColor: ColorManager.white,
       body: Container(
         padding: EdgeInsets.only(top: AppPadding.p100),
         child: SingleChildScrollView(
